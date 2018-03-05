@@ -1,5 +1,5 @@
-Bio2BEL MSIG |build| |coverage| |docs|
-======================================
+Bio2BEL MSIG |docs|
+===================
 This package allows the enrichment of BEL networks with MSIGDB information.
 Furthermore, it is integrated in the `ComPath environment <https://github.com/ComPath>`_ for pathway database comparison.
 
@@ -21,14 +21,6 @@ Following, the main functionalities and commands to work with this package:
 Citation
 --------
 - Subramanian, A., Tamayo, P., Mootha, V. K., Mukherjee, S., Ebert, B. L., Gillette, M. A., ... & Mesirov, J. P. (2005). Gene set enrichment analysis: a knowledge-based approach for interpreting genome-wide expression profiles. Proceedings of the National Academy of Sciences, 102(43), 15545-15550.
-
-.. |build| image:: https://travis-ci.org/bio2bel/msig.svg?branch=master
-    :target: https://travis-ci.org/bio2bel/msig
-    :alt: Build Status
-
-.. |coverage| image:: https://codecov.io/gh/bio2bel/msig/coverage.svg?branch=master
-    :target: https://codecov.io/gh/bio2bel/msig?branch=master
-    :alt: Coverage Status
 
 .. |docs| image:: http://readthedocs.org/projects/bio2bel-msig/badge/?version=latest
     :target: http://bio2bel.readthedocs.io/projects/msig/en/latest/?badge=latest
