@@ -5,6 +5,7 @@ from __future__ import print_function
 import logging
 
 import click
+
 from .constants import DEFAULT_CACHE_CONNECTION
 from .manager import Manager
 
@@ -61,3 +62,12 @@ def drop(debug, yes, connection):
         m = Manager(connection=connection)
         click.echo("drop db")
         m.drop_all()
+
+
+@main.command()
+@click.option('-c', '--connection', help="Defaults to {}".format(DEFAULT_CACHE_CONNECTION))
+def web(connection):
+    """Run web"""
+    from .web import create_app
+    app = create_app(connection=connection)
+    app.run(host='0.0.0.0', port=5000)
