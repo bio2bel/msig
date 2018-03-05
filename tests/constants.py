@@ -12,8 +12,6 @@ resources_path = os.path.join(dir_path, 'resources')
 
 gene_sets_path = os.path.join(resources_path, 'test_gmt_file.gmt')
 
-from pybel.constants import *
-
 
 class DatabaseMixin(unittest.TestCase):
     @classmethod
