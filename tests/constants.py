@@ -21,8 +21,6 @@ class DatabaseMixin(unittest.TestCase):
         cls.fd, cls.path = tempfile.mkstemp()
         cls.connection = 'sqlite:///' + cls.path
 
-        log.info('Test generated connection string %s', cls.connection)
-
         # create temporary database
         cls.manager = Manager(cls.connection)
 
