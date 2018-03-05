@@ -27,7 +27,7 @@ def set_debug_param(debug):
 
 @click.group()
 def main():
-    """Compath Template"""
+    """Bio2BEL MSIG"""
     logging.basicConfig(level=10, format="%(asctime)s - %(levelname)s - %(message)s")
 
 

@@ -33,12 +33,12 @@ class Manager(object):
         self.create_all()
 
     def create_all(self, check_first=True):
-        """Create tables for Template"""
+        """Create tables for Bio2BEL MSIG"""
         log.info('create table in {}'.format(self.engine.url))
         Base.metadata.create_all(self.engine, checkfirst=check_first)
 
     def drop_all(self, check_first=True):
-        """Drop all tables for Template"""
+        """Drop all tables for  Bio2BEL MSIG"""
         log.info('drop tables in {}'.format(self.engine.url))
         Base.metadata.drop_all(self.engine, checkfirst=check_first)
 
