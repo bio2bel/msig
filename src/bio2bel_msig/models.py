@@ -28,6 +28,8 @@ class Pathway(Base):
 
     id = Column(Integer, primary_key=True)
 
+    msig_id = Column(String(255), unique=True, index=True, nullable=False, doc='id')
+
     name = Column(String(255), unique=True, index=True, nullable=False, doc='pathway name')
 
     proteins = relationship(
@@ -38,6 +40,17 @@ class Pathway(Base):
 
     def __repr__(self):
         return self.name
+
+    def get_gene_set(self):
+        """Returns the genes associated with the pathway (gene set). Note this function restricts to HGNC symbols genes
+
+        :rtype: set[bio2bel_msig.models.Protein]
+        """
+        return {
+            protein
+            for protein in self.proteins
+            if protein.hgnc_symbol
+        }
 
 
 class Protein(Base):
@@ -51,3 +64,10 @@ class Protein(Base):
 
     def __repr__(self):
         return self.hgnc_symbol
+
+    def get_pathways_ids(self):
+        """Returns the pathways associated with the protein"""
+        return {
+            pathway.msig_id
+            for pathway in self.pathways
+        }

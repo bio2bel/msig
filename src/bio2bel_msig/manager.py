@@ -4,7 +4,9 @@
 This module populates the tables of Bio2BEL MSIG
 """
 
+import itertools
 import logging
+from collections import Counter
 
 from bio2bel.utils import get_connection
 from sqlalchemy import create_engine
@@ -56,13 +58,44 @@ class Manager(object):
     """Custom query methods"""
 
     def query_gene_set(self, gene_set):
-        """Returns Proteins within the gene set
+        """Returns pathway counter dictionary
 
-        :param gene_set: set of gene symbols
-        :rtype: list[models.Protein]
-        :return: list of proteins
+        :param list[str] gene_set: gene set to be queried
+        :rtype: list[dict]
+        :return: Enriched pathways with mapped pathways/total
         """
 
+        proteins = self._query_proteins_in_hgnc_list(gene_set)
+
+        pathways_lists = [
+            protein.get_pathways_ids()
+            for protein in proteins
+        ]
+
+        # Flat the pathways lists and applies Counter to get the number matches in every mapped pathway
+        pathway_counter = Counter(itertools.chain(*pathways_lists))
+
+        enrichment_results = list()
+
+        for pathway_msig_id, proteins_mapped in pathway_counter.items():
+            pathway = self.get_pathway_by_id(pathway_msig_id)
+
+            enrichment_results.append({
+                "pathway_id": pathway.msig_id,
+                "pathway_name": pathway.name,
+                "mapped_proteins": proteins_mapped,
+                "pathway_size": len(pathway.get_gene_set())
+            })
+
+        return enrichment_results
+
+    def _query_proteins_in_hgnc_list(self, gene_set):
+        """Returns the proteins in the database within the gene set query
+
+        :param list[str] gene_set: hgnc symbol lists
+        :rtype: list[bio2bel_msig.models.Protein]
+        :return: list of proteins
+        """
         return self.session.query(Protein).filter(Protein.hgnc_symbol.in_(gene_set)).all()
 
     def get_pathway_by_id(self, identifier):
@@ -71,7 +104,7 @@ class Manager(object):
         :param id:  identifier
         :rtype: Optional[Pathway]
         """
-        return self.session.query(Pathway).filter(Pathway.id == identifier).one_or_none()
+        return self.session.query(Pathway).filter(Pathway.msig_id == identifier).one_or_none()
 
     def get_pathway_by_name(self, pathway_name):
         """Gets a pathway by its name
@@ -152,7 +185,8 @@ class Manager(object):
 
         if pathway is None:
             pathway = Pathway(
-                name=pathway_name
+                name=pathway_name,
+                msig_id=pathway_name
             )
             self.session.add(pathway)
 

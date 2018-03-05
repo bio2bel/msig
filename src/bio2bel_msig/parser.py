@@ -15,7 +15,7 @@ def _process_line(line):
     :return: genes set associated
     """
     processed_line = [
-        word
+        word.strip()
         for word in line.split('\t')
     ]
 
@@ -30,7 +30,7 @@ def parse_gmt_file(url=None):
     :rtype: list
     """
     pathways = []
-    with open(url if url else GENE_SETS_PATH, 'rU') as file:
+    with open(url if url else GENE_SETS_PATH, 'r') as file:
         for line in file:
             pathway_name, url_info, gene_set = _process_line(line)
 
