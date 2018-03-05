@@ -1,0 +1,5 @@
+click
+bio2bel
+sqlalchemy==1.1.15
+tqdm
+pandas
