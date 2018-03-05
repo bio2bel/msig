@@ -7,6 +7,9 @@ Installation
 ------------
 This code can be installed with :code:`pip3 install git+https://github.com/bio2bel/MSIG.git`
 
+The package expects you have downloaded the gene sets from MSIGDB following the instructions and terms stated in their website.
+The gene sets in gmt format should placed in /resources. However, feel free to change the directory by modifying the constants module.
+
 Functionalities and Commands
 ----------------------------
 Following, the main functionalities and commands to work with this package:

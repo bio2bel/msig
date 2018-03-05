@@ -13,6 +13,7 @@ from tqdm import tqdm
 
 from .constants import MODULE_NAME
 from .models import Base, Pathway, Protein
+from .parser import parse_gmt_file
 
 __all__ = [
     'Manager'
@@ -190,40 +191,25 @@ class Manager(object):
 
     """Methods to populate the DB"""
 
-    def _populate_pathways(self, url=None):
-        """Populate pathway table
+    def populate(self, url=None):
+        """Populates all tables
 
-        :param Optional[str] url: url from pathway table file
+        :param Optional[str] url: url from gmt file
         """
+        pathways = parse_gmt_file(url=url)
 
-        # TODO: add here your parser for the pathway model (see example.py)
-        pathways_dict = ...
+        hgnc_symbol_protein = {}
 
-        for id, name in tqdm(pathways_dict.items(), desc='Loading pathways'):
-            pathway = self.get_or_create_pathway(pathway_name=name)
+        for pathway_name, _, gene_set in tqdm(pathways, desc='Loading database'):
 
-        self.session.commit()
+            pathway = self.get_or_create_pathway(pathway_name=pathway_name)
 
-    def _pathway_entity(self, url=None):
-        """Populates Protein Tables
+            for hgnc_symbol in gene_set:
 
-        :param Optional[str] url: url from protein to pathway file
-        """
+                protein = self.get_or_create_protein(hgnc_symbol)
+                hgnc_symbol_protein[hgnc_symbol] = protein
 
-        # TODO: add here your parser for the protein model (see example.py)
+                if pathway not in protein.pathways:
+                    protein.pathways.append(pathway)
 
-        protein_pathway_dict = ...
-
-        for hgnc_symbol, pathway_name in tqdm(protein_pathway_dict, desc='Loading proteins'):
-            protein = self.get_or_create_protein(hgnc_symbol=hgnc_symbol)
-
-            pathway = self.get_pathway_by_name(pathway_name)
-
-            protein.pathways.append(pathway)
-
-        self.session.commit()
-
-    def populate(self, pathways_url=None, protein_pathway_url=None):
-        """Populates all tables"""
-        self._populate_pathways(url=pathways_url)
-        self._pathway_entity(url=protein_pathway_url)
+            self.session.commit()

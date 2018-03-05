@@ -12,4 +12,8 @@ DEFAULT_CACHE_CONNECTION = get_connection(MODULE_NAME)
 
 CONFIG_FILE_PATH = os.path.join(DATA_DIR, 'config.ini')
 
-MOTIF_GENE_SETS = 'http://software.broadinstitute.org/gsea/msigdb/download_file.jsp?filePath=/resources/msigdb/6.1/c3.all.v6.1.symbols.gmt'
+PATHWAY_LINK = 'http://www.broadinstitute.org/gsea/msigdb/cards/{}'
+
+RESOURCES_PATH = os.path.abspath(os.path.join(__file__, "../../.."))
+
+GENE_SETS_PATH = os.path.join(RESOURCES_PATH, 'resources', 'gene_sets.gmt')
