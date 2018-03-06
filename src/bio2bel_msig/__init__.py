@@ -8,6 +8,8 @@ Citation
 - Subramanian, A., Tamayo, P., Mootha, V. K., Mukherjee, S., Ebert, B. L., Gillette, M. A., ... & Mesirov, J. P. (2005). Gene set enrichment analysis: a knowledge-based approach for interpreting genome-wide expression profiles. Proceedings of the National Academy of Sciences, 102(43), 15545-15550.
 """
 
+from .manager import Manager
+
 __version__ = '0.0.1-dev'
 
 __title__ = 'bio2bel_msig'
