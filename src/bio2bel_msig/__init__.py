@@ -35,7 +35,7 @@ for entry_point in iter_entry_points(group=MODULE_NAME, name=None):
 
 __version__ = '0.0.1-dev'
 
-__title__ = 'MSIG'
+__title__ = 'bio2bel_msig'
 __description__ = "A wrapper around MSIGDB"
 __url__ = 'https://github.com/bio2bel/MSIG'
 
