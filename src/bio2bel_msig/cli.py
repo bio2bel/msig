@@ -8,7 +8,7 @@ import os
 import click
 from pandas import DataFrame, Series
 
-from .constants import DEFAULT_CACHE_CONNECTION
+from .constants import DEFAULT_CACHE_CONNECTION, GENE_SETS_PATH
 from .manager import Manager
 
 log = logging.getLogger(__name__)
@@ -36,8 +36,9 @@ def main():
 @main.command()
 @click.option('-v', '--debug', count=True, help="Turn on debugging.")
 @click.option('-c', '--connection', help="Defaults to {}".format(DEFAULT_CACHE_CONNECTION))
+@click.option('-f', '--file', help="Defaults to {}".format(GENE_SETS_PATH))
 @click.option('-d', '--delete_first', is_flag=True)
-def populate(debug, connection, delete_first):
+def populate(debug, connection, file, delete_first):
     """Build the local version of the repo."""
     set_debug_param(debug)
 
@@ -48,7 +49,7 @@ def populate(debug, connection, delete_first):
         m.create_all()
 
     click.echo("populate tables")
-    m.populate()
+    m.populate(file)
 
 
 @main.command()
