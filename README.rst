@@ -5,9 +5,9 @@ Furthermore, it is integrated in the `ComPath environment <https://github.com/Co
 
 Installation
 ------------
-This code can be installed with :code:`pip3 install git+https://github.com/bio2bel/MSIG.git`
+This code can be installed with :code:`pip3 install git+https://github.com/bio2bel/msig.git`
 
-The package expects you have downloaded the gene sets from MSIGDB following the instructions and terms stated in their website.
+The package expects you have downloaded the gene sets from MSIGDB following the instructions and terms stated in their `website <http://software.broadinstitute.org/gsea/downloads.jsp>`_.
 The gene sets in gmt format should placed in /resources. However, feel free to change the directory by modifying the constants module.
 
 Functionalities and Commands

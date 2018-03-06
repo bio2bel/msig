@@ -16,4 +16,4 @@ PATHWAY_LINK = 'http://www.broadinstitute.org/gsea/msigdb/cards/{}'
 
 RESOURCES_PATH = os.path.abspath(os.path.join(__file__, "../../.."))
 
-GENE_SETS_PATH = os.path.join(RESOURCES_PATH, 'resources', 'gene_sets.gmt')
+GENE_SETS_PATH = os.path.join(DATA_DIR, 'resources', 'gene_sets.gmt')

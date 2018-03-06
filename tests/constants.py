@@ -26,7 +26,7 @@ class DatabaseMixin(unittest.TestCase):
 
         # fill temporary database with test data
         cls.manager.populate(
-            url=gene_sets_path
+            path=gene_sets_path
         )
 
     @classmethod

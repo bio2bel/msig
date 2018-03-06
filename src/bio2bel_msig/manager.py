@@ -3,9 +3,9 @@
 """
 This module populates the tables of Bio2BEL MSIG
 """
-
 import itertools
 import logging
+import os
 from collections import Counter
 
 from sqlalchemy import create_engine
@@ -235,12 +235,18 @@ class Manager(object):
 
     """Methods to populate the DB"""
 
-    def populate(self, url=None):
+    def populate(self, path=None):
         """Populates all tables
 
-        :param Optional[str] url: url from gmt file
+        :param Optional[str] path: url from gmt file
         """
-        pathways = parse_gmt_file(url=url)
+        if path is None:
+            path = os.environ.get('BIO2BEL_MSIG_PATH')
+
+            if path is None:
+                raise RuntimeError('No path set in the environment')
+
+        pathways = parse_gmt_file(url=path)
 
         hgnc_symbol_protein = {}
 
