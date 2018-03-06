@@ -3,8 +3,10 @@
 from __future__ import print_function
 
 import logging
+import os
 
 import click
+from pandas import DataFrame, Series
 
 from .constants import DEFAULT_CACHE_CONNECTION
 from .manager import Manager
@@ -62,6 +64,27 @@ def drop(debug, yes, connection):
         m = Manager(connection=connection)
         click.echo("drop db")
         m.drop_all()
+
+
+@main.command()
+@click.option('-c', '--connection', help="Defaults to {}".format(DEFAULT_CACHE_CONNECTION))
+def export(connection):
+    """Export all pathway - gene info to a excel file"""
+    m = Manager(connection=connection)
+
+    log.info("Querying the database")
+
+    # https://stackoverflow.com/questions/19736080/creating-dataframe-from-a-dictionary-where-entries-have-different-lengths
+    genesets = DataFrame(
+        dict([
+            (k, Series(list(v)))
+            for k, v in m.export_genesets().items()
+        ])
+    )
+
+    log.info("Geneset exported to '{}/msig_gene_sets.xlsx'".format(os.getcwd()))
+
+    genesets.to_excel('msig_gene_sets.xlsx', index=False)
 
 
 @main.command()

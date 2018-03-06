@@ -8,11 +8,11 @@ import itertools
 import logging
 from collections import Counter
 
-from bio2bel.utils import get_connection
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from tqdm import tqdm
 
+from bio2bel.utils import get_connection
 from .constants import MODULE_NAME
 from .models import Base, Pathway, Protein
 from .parser import parse_gmt_file
@@ -56,6 +56,16 @@ class Manager(object):
         raise TypeError
 
     """Custom query methods"""
+
+    def export_genesets(self):
+        """Returns pathway - genesets mapping"""
+        return {
+            pathway.name: {
+                protein.hgnc_symbol
+                for protein in pathway.proteins
+            }
+            for pathway in self.session.query(Pathway).all()
+        }
 
     def query_gene_set(self, gene_set):
         """Returns pathway counter dictionary
