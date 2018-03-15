@@ -52,6 +52,10 @@ class Pathway(Base):
             if protein.hgnc_symbol
         }
 
+    @property
+    def url(self):
+        return 'http://software.broadinstitute.org/gsea/msigdb/geneset_page.jsp?geneSetName={}'.format(self.name)
+
 
 class Protein(Base):
     """Genes Table"""
