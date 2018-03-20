@@ -56,7 +56,7 @@ class TestParse(DatabaseMixin):
                     "pathway_size": 8,
                 }
             ],
-            enriched_pathways
+            enriched_pathways["MYOD_01"]
         )
 
     def test_gene_query_2(self):
@@ -71,7 +71,7 @@ class TestParse(DatabaseMixin):
                 "mapped_proteins": 2,
                 "pathway_size": 4
             },
-            enriched_pathways
+            enriched_pathways["AAANWWTGC_UNKNOWN"]
         )
 
         self.assertIn(
@@ -81,7 +81,7 @@ class TestParse(DatabaseMixin):
                 "mapped_proteins": 1,
                 "pathway_size": 3
             },
-            enriched_pathways
+            enriched_pathways["AAAYRNCTG_UNKNOWN"]
         )
 
         self.assertIn(
@@ -91,5 +91,5 @@ class TestParse(DatabaseMixin):
                 "mapped_proteins": 1,
                 "pathway_size": 8
             },
-            enriched_pathways
+            enriched_pathways["MYOD_01"]
         )
