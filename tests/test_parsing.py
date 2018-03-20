@@ -54,6 +54,16 @@ class TestParse(DatabaseMixin):
                 "pathway_name": "MYOD_01",
                 "mapped_proteins": 1,
                 "pathway_size": 8,
+                "pathway_gene_set": {
+                    'DST',
+                    'EFNA1',
+                    'EIF2C1',
+                    'FAM126A',
+                    'HMGN2',
+                    'KCNE1L',
+                    'PDS5B',
+                    'PGF'
+                }
             },
             enriched_pathways["MYOD_01"]
         )
@@ -68,8 +78,10 @@ class TestParse(DatabaseMixin):
                 "pathway_id": "AAANWWTGC_UNKNOWN",
                 "pathway_name": "AAANWWTGC_UNKNOWN",
                 "mapped_proteins": 2,
-                "pathway_size": 4
+                "pathway_size": 4,
+                "pathway_gene_set": {'PDS5B', 'ATP1B1', 'MEF2C', 'RORA'}
             },
+
             enriched_pathways["AAANWWTGC_UNKNOWN"]
         )
 
@@ -78,7 +90,7 @@ class TestParse(DatabaseMixin):
                 "pathway_id": "AAAYRNCTG_UNKNOWN",
                 "pathway_name": "AAAYRNCTG_UNKNOWN",
                 "mapped_proteins": 1,
-                "pathway_size": 3
+                "pathway_size": 3,
             },
             enriched_pathways["AAAYRNCTG_UNKNOWN"]
         )
@@ -88,7 +100,17 @@ class TestParse(DatabaseMixin):
                 "pathway_id": "MYOD_01",
                 "pathway_name": "MYOD_01",
                 "mapped_proteins": 1,
-                "pathway_size": 8
+                "pathway_size": 8,
+                "pathway_gene_set": {
+                    'DST',
+                    'EFNA1',
+                    'EIF2C1',
+                    'FAM126A',
+                    'HMGN2',
+                    'KCNE1L',
+                    'PDS5B',
+                    'PGF'
+                }
             },
             enriched_pathways["MYOD_01"]
         )
