@@ -91,6 +91,7 @@ class TestParse(DatabaseMixin):
                 "pathway_name": "AAAYRNCTG_UNKNOWN",
                 "mapped_proteins": 1,
                 "pathway_size": 3,
+                "pathway_gene_set": {'PDS5B', 'LEKHM1', 'LTBP1'}
             },
             enriched_pathways["AAAYRNCTG_UNKNOWN"]
         )
