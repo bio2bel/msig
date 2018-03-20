@@ -2,6 +2,7 @@
 """ This module contains tests for parsing GMT files"""
 
 from bio2bel_msig.models import Pathway, Protein
+
 from tests.constants import DatabaseMixin
 
 
@@ -48,14 +49,12 @@ class TestParse(DatabaseMixin):
         self.assertIsNotNone(enriched_pathways, msg='Enriching function is not working')
 
         self.assertEqual(
-            [
-                {
-                    "pathway_id": "MYOD_01",
-                    "pathway_name": "MYOD_01",
-                    "mapped_proteins": 1,
-                    "pathway_size": 8,
-                }
-            ],
+            {
+                "pathway_id": "MYOD_01",
+                "pathway_name": "MYOD_01",
+                "mapped_proteins": 1,
+                "pathway_size": 8,
+            },
             enriched_pathways["MYOD_01"]
         )
 
@@ -64,7 +63,7 @@ class TestParse(DatabaseMixin):
         enriched_pathways = self.manager.query_gene_set(['PDS5B', 'ATP1B1'])
         self.assertIsNotNone(enriched_pathways, msg='Enriching function is not working')
 
-        self.assertIn(
+        self.assertEqual(
             {
                 "pathway_id": "AAANWWTGC_UNKNOWN",
                 "pathway_name": "AAANWWTGC_UNKNOWN",
@@ -74,7 +73,7 @@ class TestParse(DatabaseMixin):
             enriched_pathways["AAANWWTGC_UNKNOWN"]
         )
 
-        self.assertIn(
+        self.assertEqual(
             {
                 "pathway_id": "AAAYRNCTG_UNKNOWN",
                 "pathway_name": "AAAYRNCTG_UNKNOWN",
@@ -84,7 +83,7 @@ class TestParse(DatabaseMixin):
             enriched_pathways["AAAYRNCTG_UNKNOWN"]
         )
 
-        self.assertIn(
+        self.assertEqual(
             {
                 "pathway_id": "MYOD_01",
                 "pathway_name": "MYOD_01",
