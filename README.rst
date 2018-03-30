@@ -14,7 +14,7 @@ Functionalities and Commands
 ----------------------------
 Following, the main functionalities and commands to work with this package:
 
-- Populate local database with MSigDB :code:`python3 -m bio2bel_msig populate`
+- Populate local database with MSigDB :code:`python3 -m bio2bel_msig populate --path='/my/path/to/genesets/msigdb.v6.1.symbols.gmt'`
 - Run an admin site for simple querying and exploration :code:`python3 -m bio2bel_msig web` (http://localhost:5000/admin/)
 - Export gene sets for programmatic use :code:`python3 -m bio2bel_msig export`
 
