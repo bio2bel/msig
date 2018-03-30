@@ -247,7 +247,7 @@ class Manager(object):
             path = os.environ.get('BIO2BEL_MSIG_PATH')
 
             if path is None:
-                raise RuntimeError('No path set in the environment')
+                raise RuntimeError('No path set in the environment. Please specify the path of the file to populate')
 
         pathways = parse_gmt_file(url=path)
 
