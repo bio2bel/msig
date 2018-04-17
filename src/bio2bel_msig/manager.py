@@ -8,11 +8,11 @@ import logging
 import os
 from collections import Counter
 
+from bio2bel.utils import get_connection
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from tqdm import tqdm
 
-from bio2bel.utils import get_connection
 from .constants import MODULE_NAME
 from .models import Base, Pathway, Protein
 from .parser import parse_gmt_file
@@ -172,6 +172,24 @@ class Manager(object):
             for pathway in pathways
             if pathway.proteins
         }
+
+    def get_gene_distribution(self):
+        """Returns the proteins in the database within the gene set query
+
+        :rtype: dict
+        :return: pathway sizes
+        """
+
+        gene_counter = Counter()
+
+        for pathway in self.get_all_pathways():
+            if not pathway.proteins:
+                continue
+
+            for gene in pathway.proteins:
+                gene_counter[gene.hgnc_symbol] += 1
+
+        return gene_counter
 
     def query_pathway_by_name(self, query, limit=None):
         """Returns all pathways having the query in their names
