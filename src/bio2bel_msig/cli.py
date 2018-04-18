@@ -4,9 +4,9 @@ from __future__ import print_function
 
 import logging
 import os
-from bio2bel import build_cli
 
 import click
+from bio2bel import build_cli
 from pandas import DataFrame, Series
 
 from .constants import DEFAULT_CACHE_CONNECTION
@@ -16,12 +16,12 @@ log = logging.getLogger(__name__)
 
 main = build_cli(Manager)
 
+
 @main.command()
-@click.option('-v', '--debug', count=True, help="Turn on debugging.")
 @click.option('-c', '--connection', help="Defaults to {}".format(DEFAULT_CACHE_CONNECTION))
 @click.option('-p', '--path', help="Custom path to gene set file")
 @click.option('-d', '--delete_first', is_flag=True)
-def populate(debug, connection, path, delete_first):
+def populate(connection, path, delete_first):
     """Build the local version of the repo."""
 
     m = Manager(connection=connection)
@@ -32,7 +32,6 @@ def populate(debug, connection, path, delete_first):
 
     click.echo("populate tables")
     m.populate(path=path)
-
 
 
 @main.command()
@@ -54,4 +53,3 @@ def export(connection):
     log.info("Geneset exported to '{}/msig_gene_sets.xlsx'".format(os.getcwd()))
 
     genesets.to_excel('msig_gene_sets.xlsx', index=False)
-
