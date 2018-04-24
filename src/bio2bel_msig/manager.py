@@ -1,17 +1,15 @@
 # -*- coding: utf-8 -*-
 
-"""
-This module populates the tables of Bio2BEL MSIG
-"""
+"""This module populates the tables of Bio2BEL MSIG."""
+
 import logging
 import os
 
-from bio2bel import bio2bel_populater
 from compath_utils import CompathManager
 from tqdm import tqdm
 
 from .constants import MODULE_NAME
-from .models import Pathway, Protein, Base
+from .models import Base, Pathway, Protein
 from .parser import parse_gmt_file
 
 __all__ = [
@@ -22,7 +20,7 @@ log = logging.getLogger(__name__)
 
 
 class Manager(CompathManager):
-    """Database manager"""
+    """Bio2BEL MSIG manager."""
 
     module_name = MODULE_NAME
 
@@ -32,7 +30,7 @@ class Manager(CompathManager):
     pathway_model_identifier_column = Pathway.msig_id
 
     @property
-    def base(self):
+    def _base(self):
         return Base
 
     """Custom query methods"""
@@ -87,7 +85,6 @@ class Manager(CompathManager):
 
     """Methods to populate the DB"""
 
-    @bio2bel_populater(MODULE_NAME)
     def populate(self, path=None):
         """Populates all tables
 

@@ -1,6 +1,6 @@
 click
-compath_utils
-bio2bel>=0.0.7
+bio2bel>=0.0.9
+compath_utils>=0.0.3
 sqlalchemy==1.1.15
 tqdm
 pandas
