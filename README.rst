@@ -59,8 +59,8 @@ Citation
     :target: https://codecov.io/gh/bio2bel/msig?branch=master
     :alt: Coverage Status
 
-.. |documentation| image:: https://readthedocs.org/projects/msig/badge/?version=latest
-    :target: http://msig.readthedocs.io
+.. |documentation| image:: http://readthedocs.org/projects/bio2bel-interpro/badge/?version=latest
+    :target: http://bio2bel.readthedocs.io/projects/msig/en/latest/?badge=latest
     :alt: Documentation Status
 
 .. |climate| image:: https://codeclimate.com/github/bio2bel/msig/badges/gpa.svg
