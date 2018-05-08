@@ -59,7 +59,7 @@ Citation
     :target: https://codecov.io/gh/bio2bel/msig?branch=master
     :alt: Coverage Status
 
-.. |documentation| image:: http://readthedocs.org/projects/bio2bel-interpro/badge/?version=latest
+.. |documentation| image:: http://readthedocs.org/projects/bio2bel-msig/badge/?version=latest
     :target: http://bio2bel.readthedocs.io/projects/msig/en/latest/?badge=latest
     :alt: Documentation Status
 
