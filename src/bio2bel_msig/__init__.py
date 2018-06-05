@@ -13,7 +13,7 @@ Citation
 
 from .manager import Manager
 
-__version__ = '0.0.4-dev'
+__version__ = '0.0.4'
 
 __title__ = 'bio2bel_msig'
 __description__ = "A wrapper around MSIGDB"
