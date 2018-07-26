@@ -33,6 +33,16 @@ class Manager(CompathManager):
     def _base(self):
         return Base
 
+    def summarize(self):
+        """Summarize the database.
+
+        :rtype: dict[str,int]
+        """
+        return dict(
+            pathways=self._count_model(Pathway),
+            proteins=self._count_model(Protein),
+        )
+
     """Custom query methods"""
 
     def get_or_create_pathway(self, pathway_name):
