@@ -15,6 +15,7 @@ INSTALL_REQUIRES = [
     'compath_utils>=0.1.0',
     'sqlalchemy',
     'pandas',
+    'pybel',
     'tqdm',
 ]
 EXTRAS_REQUIRE = {
