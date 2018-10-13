@@ -5,7 +5,10 @@
 import logging
 import os
 
-from compath_utils import CompathManager
+from bio2bel.manager.bel_manager import BELManagerMixin
+from bio2bel.manager.flask_manager import FlaskMixin
+from bio2bel.manager.namespace_manager import BELNamespaceManagerMixin
+from pybel.manager.models import NamespaceEntry
 from tqdm import tqdm
 
 from .constants import MODULE_NAME
@@ -19,7 +22,7 @@ __all__ = [
 log = logging.getLogger(__name__)
 
 
-class Manager(CompathManager):
+class Manager(CompathManager, BELNamespaceManagerMixin, BELManagerMixin, FlaskMixin):
     """Bio2BEL MSIG manager."""
 
     module_name = MODULE_NAME
@@ -92,6 +95,24 @@ class Manager(CompathManager):
         :rtype: Optional[Protein]
         """
         return self.session.query(Protein).filter(Protein.hgnc_symbol == hgnc_symbol).one_or_none()
+
+    def _create_namespace_entry_from_model(self, model, namespace):
+        """Create a namespace entry from the model.
+
+        :param Pathway model: The model to convert
+        :type namespace: pybel.manager.models.Namespace
+        :rtype: Optional[pybel.manager.models.NamespaceEntry]
+        """
+        return NamespaceEntry(encoding='B', name=model.name, identifier=model.msig_id, namespace=namespace)
+
+    @staticmethod
+    def _get_identifier(model):
+        """Extract the identifier from a pathway mode.
+
+        :param Pathway model: The model to convert
+        :rtype: str
+        """
+        return model.msig_id
 
     """Methods to populate the DB"""
 
