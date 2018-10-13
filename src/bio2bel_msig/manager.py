@@ -8,6 +8,7 @@ import os
 from bio2bel.manager.bel_manager import BELManagerMixin
 from bio2bel.manager.flask_manager import FlaskMixin
 from bio2bel.manager.namespace_manager import BELNamespaceManagerMixin
+from compath_utils import CompathManager
 from pybel.manager.models import NamespaceEntry
 from tqdm import tqdm
 
