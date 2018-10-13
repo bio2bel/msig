@@ -10,6 +10,7 @@ from bio2bel.manager.flask_manager import FlaskMixin
 from bio2bel.manager.namespace_manager import BELNamespaceManagerMixin
 from compath_utils import CompathManager
 from pybel.manager.models import NamespaceEntry
+from pybel import BELGraph
 from tqdm import tqdm
 
 from .constants import MODULE_NAME
@@ -114,6 +115,16 @@ class Manager(CompathManager, BELNamespaceManagerMixin, BELManagerMixin, FlaskMi
         :rtype: str
         """
         return model.msig_id
+
+    def to_bel(self) -> BELGraph:
+        """Serialize MSIG to BEL."""
+        graph = BELGraph(
+            name='MSIG Pathway Definitions',
+            version='1.0.0',
+        )
+        for pathway in self.list_pathways():
+            self._add_pathway_to_graph(graph, pathway)
+        return graph
 
     """Methods to populate the DB"""
 
