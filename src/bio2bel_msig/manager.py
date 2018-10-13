@@ -30,7 +30,7 @@ class Manager(CompathManager, BELNamespaceManagerMixin, BELManagerMixin, FlaskMi
     module_name = MODULE_NAME
 
     flask_admin_models = [Pathway, Protein]
-    pathway_model = Pathway
+    namespace_model = pathway_model = Pathway
     protein_model = Protein
     pathway_model_identifier_column = Pathway.msig_id
 
