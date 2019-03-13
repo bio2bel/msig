@@ -9,8 +9,8 @@ from bio2bel.manager.bel_manager import BELManagerMixin
 from bio2bel.manager.flask_manager import FlaskMixin
 from bio2bel.manager.namespace_manager import BELNamespaceManagerMixin
 from compath_utils import CompathManager
-from pybel.manager.models import NamespaceEntry
 from pybel import BELGraph
+from pybel.manager.models import NamespaceEntry
 from tqdm import tqdm
 
 from .constants import MODULE_NAME
@@ -133,13 +133,27 @@ class Manager(CompathManager, BELNamespaceManagerMixin, BELManagerMixin, FlaskMi
 
         :param Optional[str] path: url from gmt file
         """
-        if path is None:
-            path = os.environ.get('BIO2BEL_MSIG_PATH')
+        path = os.environ.get('BIO2BEL_MSIG_PATH')
 
-            if path is None:
-                raise RuntimeError('No path set in the environment. Please specify the path of the file to populate')
+        if path is None:
+            print('Please set an environment variable "BIO2BEL_MSIG_PATH" pointing to the gene set file of MSIG.')
+            raise RuntimeError(
+                'Please set an environment variable "BIO2BEL_MSIG_PATH" pointing to the gene set file of MSIG.'
+            )
+
+        if not os.path.isfile(path):
+            print('The "BIO2BEL_MSIG_PATH" variable does not point to any valid file in your system.')
+            raise FileNotFoundError(
+                'The "BIO2BEL_MSIG_PATH" variable does not point to any valid file in your system.'
+            )
 
         pathways = parse_gmt_file(url=path)
+
+        if not pathways:
+            print('No pathways found. Please ensure that the selected gene set file contains pathways.')
+            raise FileNotFoundError(
+                'No pathways found. Please ensure that the selected gene set file contains pathways.'
+            )
 
         hgnc_symbol_protein = {}
 
