@@ -15,7 +15,7 @@ from tqdm import tqdm
 from typing import Mapping, Optional
 
 from .constants import MODULE_NAME
-from .models import Base, Pathway, Protein
+from .models import Base, Pathway, Protein, protein_pathway
 from .parser import download, parse_gmt_file
 
 __all__ = [
@@ -26,12 +26,13 @@ log = logging.getLogger(__name__)
 
 
 class Manager(CompathManager, BELNamespaceManagerMixin, BELManagerMixin, FlaskMixin):
-    """Gene set definitions."""
+    """Gene-gene set memberships."""
 
     module_name = MODULE_NAME
     _base = Base
     flask_admin_models = [Pathway, Protein]
     namespace_model = pathway_model = Pathway
+    edge_model = protein_pathway
     protein_model = Protein
     pathway_model_identifier_column = Pathway.msig_id
 
