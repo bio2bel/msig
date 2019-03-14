@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+"""Setup.py for Bio2BEL MSig."""
+
 import codecs
 import os
 import re
@@ -17,6 +19,7 @@ INSTALL_REQUIRES = [
     'pandas',
     'pybel',
     'tqdm',
+    'scrapy',
 ]
 EXTRAS_REQUIRE = {
     'web': ['flask', 'flask_admin'],
@@ -26,7 +29,7 @@ ENTRY_POINTS = {
         '{mname} = bio2bel_{mname}'.format(mname=BIO2BEL_MODULE),
     ],
     'compath': [
-        '{mname} = bio2bel_{mname}'.format(mname=BIO2BEL_MODULE)
+        '{mname} = bio2bel_{mname}'.format(mname=BIO2BEL_MODULE),
     ],
     'console_scripts': [
         'bio2bel_{mname} = bio2bel_{mname}.cli:main'.format(mname=BIO2BEL_MODULE),

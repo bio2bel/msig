@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 """ This module contains tests for parsing GMT files"""
 
 from bio2bel_msig.models import Pathway, Protein
@@ -7,7 +8,7 @@ from tests.constants import DatabaseMixin
 
 
 class TestParse(DatabaseMixin):
-    """Tests the parsing module"""
+    """Tests the parsing module."""
 
     def test_pathway_count(self):
         pathway_number = self.manager.session.query(Pathway).count()
@@ -27,7 +28,7 @@ class TestParse(DatabaseMixin):
             {
                 gene.hgnc_symbol
                 for gene in pathway.proteins
-            }
+            },
         )
 
     def test_pathway_protein_2(self):
@@ -40,7 +41,7 @@ class TestParse(DatabaseMixin):
             {
                 gene.hgnc_symbol
                 for gene in pathway.proteins
-            }
+            },
         )
 
     def test_gene_query_1(self):
@@ -62,10 +63,10 @@ class TestParse(DatabaseMixin):
                     'HMGN2',
                     'KCNE1L',
                     'PDS5B',
-                    'PGF'
-                }
+                    'PGF',
+                },
             },
-            enriched_pathways["MYOD_01"]
+            enriched_pathways["MYOD_01"],
         )
 
     def test_gene_query_2(self):
@@ -79,10 +80,14 @@ class TestParse(DatabaseMixin):
                 "pathway_name": "AAANWWTGC_UNKNOWN",
                 "mapped_proteins": 2,
                 "pathway_size": 4,
-                "pathway_gene_set": {'PDS5B', 'ATP1B1', 'MEF2C', 'RORA'}
+                "pathway_gene_set": {
+                    'PDS5B',
+                    'ATP1B1',
+                    'MEF2C',
+                    'RORA',
+                },
             },
-
-            enriched_pathways["AAANWWTGC_UNKNOWN"]
+            enriched_pathways["AAANWWTGC_UNKNOWN"],
         )
 
         self.assertEqual(
@@ -91,9 +96,9 @@ class TestParse(DatabaseMixin):
                 "pathway_name": "AAAYRNCTG_UNKNOWN",
                 "mapped_proteins": 1,
                 "pathway_size": 3,
-                "pathway_gene_set": {'PDS5B', 'LEKHM1', 'LTBP1'}
+                "pathway_gene_set": {'PDS5B', 'LEKHM1', 'LTBP1'},
             },
-            enriched_pathways["AAAYRNCTG_UNKNOWN"]
+            enriched_pathways["AAAYRNCTG_UNKNOWN"],
         )
 
         self.assertEqual(
@@ -110,8 +115,8 @@ class TestParse(DatabaseMixin):
                     'HMGN2',
                     'KCNE1L',
                     'PDS5B',
-                    'PGF'
-                }
+                    'PGF',
+                },
             },
-            enriched_pathways["MYOD_01"]
+            enriched_pathways["MYOD_01"],
         )
