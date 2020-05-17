@@ -9,6 +9,11 @@ If you find this package useful, please consider citing [domingofernandez2018]_:
    and curating mappings across pathway databases <https://doi.org/10.1038/s41540-018-0078-8>`_.
    *Npj Systems Biology and Applications*, **5**(1), 3.
 
+**Warning** This package creates ``partOf`` relationships in BEL. MSigDB does not contain mechanistic relationships,
+but it include simplifications of several sources (KEGG, WikiPathways, Reactome, PID) that do have mechanistic
+relationships. Those sources can be converted to BEL with the
+`PathMe project <https://github.com/pathwaymerger/pathme>`_.
+
 Installation |pypi_version| |python_versions| |pypi_license|
 ------------------------------------------------------------
 ``bio2bel_msig`` can be installed easily from `PyPI <https://pypi.python.org/pypi/bio2bel_msig>`_ with the
@@ -18,11 +23,13 @@ following code in your favorite terminal:
 
     $ pip install bio2bel_msig
 
-or from the latest code on `GitHub <https://github.com/bio2bel/msig>`_ with:
+or from the latest code on `GitHub <https://github.com/bio2bel/msig>`_ in development mode with:
 
 .. code-block:: sh
 
-    $ pip install git+https://github.com/bio2bel/msig.git
+    $ git clone https://github.com/bio2bel/msig.git
+    $ cd msig
+    $ pip install -e .
 
 Setup
 -----
