@@ -2,18 +2,14 @@
 
 """This module populates the tables of Bio2BEL MSIG."""
 
-import click
 import logging
-import os
-from bio2bel.manager.bel_manager import BELManagerMixin
-from bio2bel.manager.flask_manager import FlaskMixin
-from bio2bel.manager.namespace_manager import BELNamespaceManagerMixin
-from compath_utils import CompathManager
+from typing import Mapping, Optional
+
 from pybel import BELGraph
 from pybel.manager.models import Namespace, NamespaceEntry
 from tqdm import tqdm
-from typing import Mapping, Optional
 
+from bio2bel.compath import CompathManager
 from .constants import MODULE_NAME
 from .models import Base, Pathway, Protein, protein_pathway
 from .parser import download, parse_gmt_file
@@ -22,10 +18,10 @@ __all__ = [
     'Manager'
 ]
 
-log = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 
-class Manager(CompathManager, BELNamespaceManagerMixin, BELManagerMixin, FlaskMixin):
+class Manager(CompathManager):
     """Gene-gene set memberships."""
 
     module_name = MODULE_NAME
@@ -104,9 +100,9 @@ class Manager(CompathManager, BELNamespaceManagerMixin, BELManagerMixin, FlaskMi
 
         :param path: Path to a custom GMT file
         """
+        download()
         pathways = parse_gmt_file(path=path)
         if not pathways:
-            print('No pathways found. Please ensure that the selected gene set file contains pathways.')
             raise FileNotFoundError(
                 'No pathways found. Please ensure that the selected gene set file contains pathways.'
             )
@@ -162,14 +158,3 @@ class Manager(CompathManager, BELNamespaceManagerMixin, BELManagerMixin, FlaskMi
         admin.add_view(PathwayView(Pathway, self.session))
         admin.add_view(ProteinView(Protein, self.session))
         return admin
-
-    @classmethod
-    def get_cli(cls) -> click.Group:
-        main = super().get_cli()
-
-        @main.command()
-        def ensure():
-            """Ensure the files are downloaded."""
-            click.echo(download())
-
-        return main

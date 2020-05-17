@@ -6,6 +6,9 @@ from sqlalchemy import Column, ForeignKey, Integer, String, Table
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
+from bio2bel.compath import CompathPathwayMixin, CompathProteinMixin
+from bio2bel.manager.models import SpeciesMixin
+
 Base = declarative_base()
 
 TABLE_PREFIX = 'msig'
@@ -21,7 +24,7 @@ protein_pathway = Table(
 )
 
 
-class Pathway(Base):
+class Pathway(Base, CompathPathwayMixin):
     """Pathway Table"""
 
     __tablename__ = PATHWAY_TABLE_NAME
@@ -61,7 +64,7 @@ class Pathway(Base):
         return 'http://software.broadinstitute.org/gsea/msigdb/geneset_page.jsp?geneSetName={}'.format(self.name)
 
 
-class Protein(Base):
+class Protein(Base, CompathProteinMixin):
     """Genes Table"""
 
     __tablename__ = PROTEIN_TABLE_NAME

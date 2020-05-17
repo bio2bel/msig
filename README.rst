@@ -10,13 +10,13 @@ following code in your favorite terminal:
 
 .. code-block:: sh
 
-    $ python3 -m pip install bio2bel_msig
+    $ pip install bio2bel_msig
 
 or from the latest code on `GitHub <https://github.com/bio2bel/msig>`_ with:
 
 .. code-block:: sh
 
-    $ python3 -m pip install git+https://github.com/bio2bel/msig.git@master
+    $ pip install git+https://github.com/bio2bel/msig.git
 
 Setup
 -----
