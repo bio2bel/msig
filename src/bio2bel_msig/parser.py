@@ -3,10 +3,12 @@
 """Parsers for Bio2BEL MSig."""
 
 import logging
-import scrapy
+import os
 from functools import partial
+from typing import List, Optional, Set, Tuple
+
+import scrapy
 from scrapy.crawler import CrawlerProcess
-from typing import Iterable, List, Optional, Set, Tuple
 
 from .constants import GMT_ENTREZ_PATH, GMT_ENTREZ_URL, GMT_HGNC_SYMBOLS_PATH, GMT_HGNC_SYMBOLS_URL
 

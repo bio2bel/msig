@@ -3,6 +3,17 @@ Bio2BEL MSigDB |build| |coverage| |documentation| |zenodo|
 This package allows the enrichment of BEL networks with MSigDB information.
 Furthermore, it is integrated in the `ComPath environment <https://github.com/ComPath>`_ for pathway database comparison.
 
+If you find this package useful, please consider citing [domingofernandez2018]_:
+
+.. [domingofernandez2018] Domingo-Fernandez, D., *et al* (2018). `ComPath: an ecosystem for exploring, analyzing,
+   and curating mappings across pathway databases <https://doi.org/10.1038/s41540-018-0078-8>`_.
+   *Npj Systems Biology and Applications*, __5__(1), 3.
+
+**Warning** This package creates ``partOf`` relationships in BEL. MSigDB does not contain mechanistic relationships,
+but it include simplifications of several sources (KEGG, WikiPathways, Reactome, PID) that do have mechanistic
+relationships. Those sources can be converted to BEL with the
+`PathMe project <https://github.com/pathwaymerger/pathme>`_.
+
 Installation |pypi_version| |python_versions| |pypi_license|
 ------------------------------------------------------------
 ``bio2bel_msig`` can be installed easily from `PyPI <https://pypi.python.org/pypi/bio2bel_msig>`_ with the
@@ -10,13 +21,15 @@ following code in your favorite terminal:
 
 .. code-block:: sh
 
-    $ python3 -m pip install bio2bel_msig
+    $ pip install bio2bel_msig
 
-or from the latest code on `GitHub <https://github.com/bio2bel/msig>`_ with:
+or from the latest code on `GitHub <https://github.com/bio2bel/msig>`_ in development mode with:
 
 .. code-block:: sh
 
-    $ python3 -m pip install git+https://github.com/bio2bel/msig.git@master
+    $ git clone https://github.com/bio2bel/msig.git
+    $ cd msig
+    $ pip install -e .
 
 Setup
 -----
