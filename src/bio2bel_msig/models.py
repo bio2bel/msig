@@ -1,26 +1,25 @@
 # -*- coding: utf-8 -*-
 
-"""Bio2BEL MSIG database models"""
+"""Bio2BEL MSIG database models."""
 
 from sqlalchemy import Column, ForeignKey, Integer, String, Table
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
 from bio2bel.compath import CompathPathwayMixin, CompathProteinMixin
-from bio2bel.manager.models import SpeciesMixin
 
 Base = declarative_base()
 
 TABLE_PREFIX = 'msig'
-PATHWAY_TABLE_NAME = '{}_pathway'.format(TABLE_PREFIX)
-PROTEIN_TABLE_NAME = '{}_protein'.format(TABLE_PREFIX)
-PROTEIN_PATHWAY_TABLE = '{}_protein_pathway'.format(TABLE_PREFIX)
+PATHWAY_TABLE_NAME = f'{TABLE_PREFIX}_pathway'
+PROTEIN_TABLE_NAME = f'{TABLE_PREFIX}_protein'
+PROTEIN_PATHWAY_TABLE = f'{TABLE_PREFIX}_protein_pathway'
 
 protein_pathway = Table(
     PROTEIN_PATHWAY_TABLE,
     Base.metadata,
-    Column('protein_id', Integer, ForeignKey('{}.id'.format(PROTEIN_TABLE_NAME)), primary_key=True),
-    Column('pathway_id', Integer, ForeignKey('{}.id'.format(PATHWAY_TABLE_NAME)), primary_key=True)
+    Column('protein_id', Integer, ForeignKey(f'{PROTEIN_TABLE_NAME}.id'), primary_key=True),
+    Column('pathway_id', Integer, ForeignKey(f'{PATHWAY_TABLE_NAME}.id'), primary_key=True)
 )
 
 
@@ -31,54 +30,28 @@ class Pathway(Base, CompathPathwayMixin):
 
     id = Column(Integer, primary_key=True)
 
-    msig_id = Column(String(255), unique=True, index=True, nullable=False, doc='id')
-
+    identifier = Column(String(255), unique=True, index=True, nullable=False, doc='msig id')
     name = Column(String(255), unique=True, index=True, nullable=False, doc='pathway name')
 
     proteins = relationship(
         'Protein',
         secondary=protein_pathway,
-        backref='pathways'
+        backref='pathways',
     )
 
-    def __repr__(self):
-        return self.name
-
-    def get_gene_set(self):
-        """Returns the genes associated with the pathway (gene set). Note this function restricts to HGNC symbols genes
-
-        :rtype: set[bio2bel_msig.models.Protein]
-        """
-        return {
-            protein.hgnc_symbol
-            for protein in self.proteins
-            if protein.hgnc_symbol
-        }
-
     @property
-    def resource_id(self):
-        return self.msig_id
-
-    @property
-    def url(self):
-        return 'http://software.broadinstitute.org/gsea/msigdb/geneset_page.jsp?geneSetName={}'.format(self.name)
+    def url(self) -> str:
+        return f'http://software.broadinstitute.org/gsea/msigdb/geneset_page.jsp?geneSetName={self.name}'
 
 
 class Protein(Base, CompathProteinMixin):
-    """Genes Table"""
+    """Genes Table."""
 
     __tablename__ = PROTEIN_TABLE_NAME
 
     id = Column(Integer, primary_key=True)
-
+    hgnc_id = Column(String(255), doc='hgnc id of the protein')
     hgnc_symbol = Column(String(255), unique=True, index=True, nullable=False, doc='hgnc symbol of the protein')
 
     def __repr__(self):
         return self.hgnc_symbol
-
-    def get_pathways_ids(self):
-        """Returns the pathways associated with the protein"""
-        return {
-            pathway.msig_id
-            for pathway in self.pathways
-        }
