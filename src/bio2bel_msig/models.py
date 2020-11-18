@@ -6,6 +6,7 @@ from sqlalchemy import Column, ForeignKey, Integer, String, Table
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
+import pybel.dsl
 from bio2bel.compath import CompathPathwayMixin, CompathProteinMixin
 
 Base = declarative_base()
@@ -55,3 +56,7 @@ class Protein(Base, CompathProteinMixin):
 
     def __repr__(self):
         return self.hgnc_symbol
+
+    def to_pybel(self) -> pybel.dsl.Protein:
+        """Convert the protein to an HGNC node."""
+        return pybel.dsl.Protein(namespace='hgnc', identifier=self.hgnc_id, name=self.hgnc_symbol)

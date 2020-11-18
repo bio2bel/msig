@@ -4,13 +4,9 @@
 
 import logging
 import os
-from functools import partial
 from typing import List, Optional, Set, Tuple
 
-import scrapy
-from scrapy.crawler import CrawlerProcess
-
-from .constants import GMT_ENTREZ_PATH, GMT_ENTREZ_URL, GMT_HGNC_SYMBOLS_PATH, GMT_HGNC_SYMBOLS_URL
+from pyobo.sources.msig import GMT_ENTREZ_PATH, GMT_HGNC_PATH, ensure_msig_path
 
 __all__ = [
     'parse_gmt_file',
@@ -19,57 +15,14 @@ __all__ = [
 
 logger = logging.getLogger(__name__)
 
-DOWNLOAD_PAIRS = [
-    (GMT_ENTREZ_URL, GMT_ENTREZ_PATH),
-    (GMT_HGNC_SYMBOLS_URL, GMT_HGNC_SYMBOLS_PATH),
-]
-
-
-class LoginSpider(scrapy.Spider):
-    """A Scrapy Spider for downloading GMT files from GSEA."""
-
-    name = 'bio2bel'
-    start_urls = ['http://software.broadinstitute.org/gsea/login.jsp']
-
-    def parse(self, response):
-        return scrapy.FormRequest.from_response(
-            response,
-            formdata={
-                'j_username': 'cthoyt@gmail.com',
-                'j_password': 'password',
-            },
-            callback=self.after_login,
-        )
-
-    def after_login(self, _):
-        """Redirect to the Downloads page."""
-        yield scrapy.Request('http://software.broadinstitute.org/gsea/downloads.jsp', callback=self.download_file)
-
-    def download_file(self, _):
-        """Redirect to the file path and download with a callback."""
-        for url, path in DOWNLOAD_PAIRS:
-            yield scrapy.Request(url, callback=partial(self.save_gmt, path=path))
-
-    @staticmethod
-    def save_gmt(response, *, path):
-        """Save the GMT file."""
-        with open(path, 'wb') as f:
-            f.write(response.body)
-
 
 def download(force: bool = False) -> None:
-    if has_files() and not force:
-        return
-    process = CrawlerProcess({
-        'USER_AGENT': 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)'
-    })
-    process.crawl(LoginSpider)
-    process.start()
-    process.join()
+    if not has_files() or force:
+        ensure_msig_path()
 
 
 def has_files() -> bool:
-    return os.path.exists(GMT_ENTREZ_PATH) and os.path.exists(GMT_HGNC_SYMBOLS_PATH)
+    return os.path.exists(GMT_ENTREZ_PATH) and os.path.exists(GMT_HGNC_PATH)
 
 
 def _process_line(line: str) -> Tuple[str, str, Set[str]]:
@@ -93,7 +46,7 @@ def parse_gmt_file(path: Optional[str] = None) -> List[Tuple[str, str, Set[str]]
     :param path: url from gmt file
     :return: line-based processed file
     """
-    with open(path or GMT_HGNC_SYMBOLS_PATH) as file:
+    with open(path or GMT_HGNC_PATH) as file:
         return [
             _process_line(line)
             for line in file
